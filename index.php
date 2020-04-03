@@ -1,9 +1,19 @@
 <?php
 
-$a = 1;
+require_once("vendor/autoload.php");
 
-$b = 2;
+$DB = new \App\models\DB();
 
-echo $a+$b;
+
+
+try{
+
+    $resInsert = $DB->insert("forTest", ["title" => "text новый", "date" => time()]);
+  //  $DB->connect();
+}
+catch (Exception $e)
+{
+    echo $e->getMessage();
+}
 
 $c;

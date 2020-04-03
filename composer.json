@@ -1,4 +1,7 @@
 {
     "name": "admin501/task",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": { "App\\": "App/" }
+    }
 }

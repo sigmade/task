@@ -71,5 +71,91 @@ class DB
 
     }
 
+    public function delete ($table, $where, $close = false)
+    {
+        $this->connect();
+        $sql = "DELETE FROM ".$table." WHERE ".$where;
+        $resQuery = $this->db_connect->query($sql);
+        if(!$resQuery){
+            throw new \Exception($this->db_connect->error);
+        }
 
+        if($close){
+            $this->disconnect();
+        }
+
+        return $this;
+
+    }
+
+    public function update($tableName, $arrValues, $where, $close = false)
+    {
+        $this->connect();
+
+        $forSql = [];
+        foreach ($arrValues as $key => $value){
+            $forSql[] = $key."='".$value."'";
+        }
+
+        $sql = "UPDATE ".$tableName." SET ".implode(",", $forSql)." WHERE ".$where;
+
+        $resQuery = $this->db_connect->query($sql);
+        if(!$resQuery){
+            throw new \Exception($this->db_connect->error);
+        }
+        if($close){
+            $this->disconnect();
+        }
+
+        return $this;
+
+    }
+
+    public function get_row($sql, $close = false)
+    {
+        $this->connect();
+
+        $resQuery = $this->db_connect->query($sql);
+        if(!$resQuery){
+            throw new \Exception($this->db_connect->error);
+        }
+
+        if($resQuery->num_rows > 0)
+        {
+            $result = $resQuery->fetch_assoc();
+            if($close){$this->disconnect();}
+            return $result;
+        }
+        else{
+            if($close){ $this->disconnect(); }
+            return false;
+        }
+    }
+
+    public function get_rows($sql, $close = false)
+    {
+        $this->connect();
+
+        $resQuery = $this->db_connect->query($sql);
+        if(!$resQuery){
+            throw new \Exception($this->db_connect->error);
+        }
+
+        if($resQuery->num_rows > 0)
+        {
+            $result = $resQuery->fetch_all(MYSQLI_ASSOC);
+            if($close){$this->disconnect();}
+            return $result;
+        }
+        else{
+            if($close){$this->disconnect();}
+            return false;
+        }
+
+
+
+
+
+
+    }
 }

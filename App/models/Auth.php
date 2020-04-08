@@ -42,7 +42,9 @@ class Auth
         setcookie("user_id", $user_id, strtotime($this->timeToDestroy), "/");
         setcookie("token", $token, strtotime($this->timeToDestroy), "/");
 
-        return $user_id;
+        $res = ["type" => "auth", "status" => true, "data" > ["user_id" => $user_id]];
+        return $res;
+
 
     }
 
@@ -60,16 +62,20 @@ class Auth
         $DB = new DB();
         $resInsert = $DB->insert("users", $arr, true);
 
+        // 2. Подготавливаем информацию
+        $PATH = new Path();
+        $body = file_get_contents("App/views/mail/confirm_email.php");
+        $body = str_replace(["{{clear_url}}", "{{token}}"], [$PATH->clear_url()."/", $arr["token"]], $body);
 
-        // 2. Отправляем письмо
+        // 3. Отправляем письмо
 
         $M = new libmail("utf-8");
-        //$M->From( "sychyov1991@yandex.ru" );
-       //$M->smtp_on("smtp.yandex.ru","sychyov1991@yandex.ru","huxnpzqswrbsscus");
+        //$M->From( "**mail" );
+       //$M->smtp_on("smtp.yandex.ru","**mail","**pass");
         $M->To($email);
         $M->Subject("Подтверждение регистрации");
         $M->log_on(true);
-        $M->Body("Test<b>Жирный текст</b>", "html");
+        $M->Body($body, "html");
         $M->Send();
 
         if($M->status_mail["status"])

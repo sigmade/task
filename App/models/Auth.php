@@ -7,6 +7,7 @@ class Auth
 {
     private $timeToDestroy = "1 month";
 
+    /** Общий метод регистрации и авторизации */
     public function enter($array)
     {
         $email = strtolower(trim($_POST["email"]));
@@ -36,18 +37,22 @@ class Auth
 
     }
 
+    /** Создаем куки для авторизованного пользователя */
     public function setAuth($user_id, $token)
     {
-        if(!$token){ $token = md5(time().rand());}
+        if(!$token){ $token = $this->newToken(); }
+
         setcookie("user_id", $user_id, strtotime($this->timeToDestroy), "/");
         setcookie("token", $token, strtotime($this->timeToDestroy), "/");
 
-        $res = ["type" => "auth", "status" => true, "data" > ["user_id" => $user_id]];
-        return $res;
 
+        $res = ["type" => "auth", "status" => true, "data" => ["user_id" => $user_id]];
+
+        return $res;
 
     }
 
+    /** Метод регистрации */
     public  function register($email, $pass)
     {
         // 1. Записываем в БД
@@ -85,5 +90,47 @@ class Auth
 
         $res = ["type" => "register", "status" => true];
         return $res;
+    }
+
+    /**
+     * Подтвердить email
+     * @param $token
+     * @return array
+     * @throws \Exception
+     */
+    public function confirm_email($token)
+    {
+        if(!$token){
+            throw new \Exception("Не верный параметр - token"); }
+
+        $token = TextSecurity::shield_hard($token);
+
+        $DB = new DB();
+        $resDb = $DB->get_row("SELECT * FROM users WHERE token = '".$token."'");
+        if(!$resDb){
+            throw new \Exception("Такой token не найден");}
+
+        //2
+        if($resDb["confirm_email"] == 1){
+            throw new \Exception("Этот token уже был использован");}
+
+        //3
+        $arr = [
+            "token" => $this->newToken(),
+            "confirm_email" => 1
+        ];
+
+        $resUpd = $DB->update("users", $arr, "id = ".$resDb["id"]);
+
+        //4
+        return $this->setAuth($resDb["id"], $arr["token"]);
+
+
+
+    }
+
+    private function newToken()
+    {
+        return md5(time().rand());
     }
 }

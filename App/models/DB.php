@@ -95,22 +95,25 @@ class DB
         $this->connect();
 
         $forSql = [];
-        foreach ($arrValues as $key => $value){
+        foreach ($arrValues as $key => $value) {
             $forSql[] = $key."='".$value."'";
         }
 
-        $sql = "UPDATE ".$tableName." SET ".implode(",", $forSql)." WHERE ".$where;
+        $set = implode(",", $forSql);
+
+       // $sql = "UPDATE ".$tableName." SET ".implode(",", $forSql)." WHERE ".$where;
+        $sql = "UPDATE $tableName SET $set WHERE $where";
 
         $resQuery = $this->db_connect->query($sql);
         if(!$resQuery){
             throw new \Exception($this->db_connect->error);
         }
+
         if($close){
             $this->disconnect();
         }
 
         return $this;
-
     }
 
     public function get_row($sql, $close = false)

@@ -7,6 +7,28 @@ class Auth
 {
     private $timeToDestroy = "1 month";
 
+    /** Авторизован ли пользователь */
+    public function check_auth()
+    {
+        if(!is_numeric($_COOKIE["user_id"]) || !$_COOKIE["token"]){ return false; }
+
+        $token = TextSecurity::shield_hard($_COOKIE["token"]);
+
+        $DB = new DB();
+        $resDb = $DB->get_row("SELECT * FROM users WHERE ID = ".$_COOKIE["user_id"]." AND token ='".$token."'");
+
+        if(!$resDb){ return false; }
+
+        return $resDb["id"];
+    }
+
+    /** Деавторизация  */
+    public function logout()
+    {
+        setcookie("user_id", '', strtotime("-1 day"), "/");
+        setcookie("token", '', strtotime("-1 day"), "/");
+    }
+
     /** Общий метод регистрации и авторизации */
     public function enter($array)
     {
@@ -27,13 +49,13 @@ class Auth
 
         //Сверим данные
         //1. Подтвердил ли пользователь свой email?
-        if(!$resUser["confirm_email"]){ throw new \Exception("Ожидается подтверждения email");}
+        if(!$resUser["confirm_email"]){ throw new \Exception("Ожидается подтверждение регистрации");}
 
         //2. Авторизуем, если пароль верен
         if(!password_verify($pass, $resUser["pass"])){ throw new \Exception("Не верный пароль");}
 
         //авторизуем
-        return $this->setAuth($resUser["ID"], $resUser["token"]);
+        return $this->setAuth($resUser["id"], $resUser["token"]);
 
     }
 
@@ -83,21 +105,16 @@ class Auth
         $M->Body($body, "html");
         $M->Send();
 
-        if($M->status_mail["status"])
+        if(!$M->status_mail["status"])
         {
-            throw new \Exception($M->status_mail["message"]);
+           throw new \Exception($M->status_mail["message"]);
         }
 
         $res = ["type" => "register", "status" => true];
         return $res;
     }
 
-    /**
-     * Подтвердить email
-     * @param $token
-     * @return array
-     * @throws \Exception
-     */
+    /** Подтвердить email  */
     public function confirm_email($token)
     {
         if(!$token){

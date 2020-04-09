@@ -15,14 +15,17 @@
             <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span> </button>
         </div>
         <p style="text-align:center"> Или  </p>
-        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-        <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <input type="email" name="email" value="<? echo $inputs_val["email"]; ?>" id="inputEmail" class="form-control" placeholder="Email адрес" required="" autofocus="">
+        <input type="password" name="pass" value="<? echo $inputs_val["pass"]; ?>" id="inputPassword" class="form-control" placeholder="Пароль" required="">
+        <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Войти</button>
+        <? if($error){ echo "<div class='alert alert-danger mt-3' role='alert'><b>Ошибка! </b>{$error['error_text']}</div>";} ?>
 
-        <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
+        <? if($succes){ echo "<div class='alert alert-success mt-3' role='alert'>{$succes['succes_text']}</div>";} ?>
+
         <a href="#" id="forgot_pswd">Забыли пароль?</a>
         <hr>
         <!-- <p>Don't have an account!</p>  -->
-        <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Sign up New Account</button>
+        <!--   <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Sign up New Account</button> -->
     </form>
 
     <form action="/reset/password/" class="form-reset">

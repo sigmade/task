@@ -1,18 +1,20 @@
 <?php
 
 require_once("vendor/autoload.php");
+$Auth = new \App\models\Auth();
+$Path = new \App\models\Path();
 
-if($_GET["c"])
+$Path->parse();
+
+if($_GET["c"] && file_exists("App/controllers/".$_GET["c"].".php"))
 {
     include("App/controllers/".$_GET["c"].".php");
 }
 else
 {
-    include("App/views/template.php");
+    include("App/controllers/main.php");
 }
 
 
-   //$DB = new \App\models\DB();
-   //$DB->connect();
-   //$resInsert = $DB->get_rows("SELECT * FROM forTest WHERE ID = 1");
+
 

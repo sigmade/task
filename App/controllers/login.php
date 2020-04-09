@@ -1,6 +1,6 @@
 <?php
 
-$Auth = new App\models\Auth();
+
 
 if($_POST["method_name"] == "enter")
 {
@@ -11,6 +11,9 @@ if($_POST["method_name"] == "enter")
     catch (Exception $e)
     {
         $error = ["error_text" => $e->getMessage()];
+        $inputs_val = $_POST;
+        include "App/views/login.php";
+        exit;
     }
 }
 
@@ -18,20 +21,40 @@ if($_POST["method_name"] == "enter")
  Если были переданы GET параметры
  */
 
-if($_GET["confirm_email"])
+if($_GET["method"])
 {
-    try
-    {
-        $Auth->confirm_email($_GET["confirm_email"]);
-    }
-    catch (Exception $e)
-    {
-        $error = ["error_text" => $e->getMessage()];
-    }
+    switch ($_GET["method"]):
+        case "confirm_email":
+            try
+            {
+                $Auth->confirm_email($_GET["code"]);
+            }
+            catch (Exception $e)
+            {
+                $error = ["error_text" => $e->getMessage()];
+            }
+        break;
+    endswitch;
 }
 
 /*
- Если были переданы GET параметры
+ Если существуют проблемы ( error )
  */
 
-include "App/views/login.php";
+if($error)
+{
+    include "App/views/for_error.php";
+}
+else if($resAuth["type"] == "register")
+{
+    $succes = ["succes_text" => "Спасибо, проверьте свою почту, для завершения регистрации"];
+    include "App/views/login.php";
+}
+else if($resAuth["type"] == "auth")
+{
+    header("Location: /");
+}
+else
+{
+    include "App/views/login.php";
+}

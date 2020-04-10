@@ -1,11 +1,22 @@
 <?php
 
 
-if(!$Auth->check_auth())
+if(!$Auth->check_auth()) { include "App/views/template.php"; exit;}
+
+/** GET */
+if($_GET["method"])
 {
-    include "App/views/template.php";
+    switch ($_GET["method"]):
+        case "create":
+
+            $pageTitle = "Добавить задачу";
+            include "App/views/task/create.php";
+            break;
+
+    endswitch;
 }
 else
 {
-    include "App/views/task.php";
+    $pageTitle = "Задачи";
+    include "App/views/task/task.php";
 }

@@ -56,5 +56,6 @@ else if($resAuth["type"] == "auth")
 }
 else
 {
+    $pageTitle = "Авторизация";
     include "App/views/login.php";
 }

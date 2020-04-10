@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <? require_once "App/views/blocks/metaHeaders.php" ?>
-    <title>Вход</title>
+    <title><? echo $pageTitle; ?></title>
     <link rel="stylesheet" href="/resources/css/login.scss">
 </head>
 <body>

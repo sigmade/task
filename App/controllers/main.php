@@ -7,5 +7,6 @@ if(!$Auth->check_auth())
 }
 else
 {
+    $pageTitle = "Главная";
     include "App/views/main.php";
 }

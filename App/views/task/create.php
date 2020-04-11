@@ -35,69 +35,77 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-            <table class="table table-hover">
-                <thead class="thead">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-                </tbody>
-            </table>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="col-md-3">
 
             </div>
-            <div class="col-md-2"></div>
+            <div class="col-md-6">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Заголовок</label>
+                        <input class="form-control" name="title" type="text" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>Для кого?</label>
+                        <select class="form-control"name="from_user_id" id="" disabled>
+                            <option value="">Test</option>
+                            <option value="">Test</option>
+                            <option value="">Test</option>
+                            <option value="">Test</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Дата когда задача должна быть выполнена (Deadline)</label>
+                        <input type="date" id="start" name="trip-start"
+                               value="2020-01-01"
+                               min="2018-01-01" max="2025-12-31">
+                    </div>
+                    <div class="form-group">
+                        <label>Текст</label>
+                        <div>
+                            <textarea id="editor1" name="text"><? echo $inputs_val["text"] ?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-bottom: 50px;">
+                        <div class="pull-left">
+                            <a href="<? echo $referer ?>" class="btn btn-default">Отмена</a>
+                        </div>
+                        <div class="pull-right">
+                            <button class="btn btn-primary">Готово</button>
+                        </div>
+                    </div>
+            </form>
+
+
+            </div>
+            <div class="col-md-3"></div>
         </div><!--/.row-->
     </div>
 
 </div>	<!--/.main-->
 
 <? require_once "App/views/blocks/jslumino.php" ?>
+
+<script src="//cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script>
 <script>
-    window.onload = function () {
-        var chart1 = document.getElementById("line-chart").getContext("2d");
-        window.myLine = new Chart(chart1).Line(lineChartData, {
-            responsive: true,
-            scaleLineColor: "rgba(0,0,0,.2)",
-            scaleGridLineColor: "rgba(0,0,0,.05)",
-            scaleFontColor: "#c5c7cc"
+
+    CKEDITOR.replace( 'editor1' );
+    $('#datepicker1').datepicker({});
+
+
+
+    !function ($) {
+        $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+            $(this).find('em:first').toggleClass("glyphicon-minus");
         });
-    };
+        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+    })
+    $(window).on('resize', function () {
+        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+    })
 </script>
 
 </body>

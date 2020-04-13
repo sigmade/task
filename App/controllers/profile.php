@@ -1,6 +1,6 @@
 <?php
 
-if(!$Auth->check_auth()) { include "App/views/template.php"; exit;}
+if(!$Auth->check_auth()) { header("Location: /"); exit;}
 
 /** GLOBAL */
 $Task       = new \App\models\Task();
@@ -8,7 +8,7 @@ $referer    = ($_POST["referer"])? $_POST["referer"] : $_SERVER["HTTP_REFERER"];
 
 /** POST */
 
-if ($_POST["method_name"]) {
+if ( $_POST["method_name"] ){
     switch ($_POST["method_name"]):
         case "create" :
 
@@ -32,10 +32,11 @@ if ($_POST["method_name"]) {
 if($_GET["method"])
 {
     switch ($_GET["method"]):
-        case "create":
+        case "settings":
 
-            $pageTitle = "Добавить задачу";
-            include "App/views/task/create.php";
+            $thisUrl = $Path->withoutGet();
+            $pageTitle = "Настройки профиля";
+            include "App/views/profile/profile_settings.php";
             break;
 
     endswitch;
@@ -45,9 +46,9 @@ else
     $taskItems = $Task->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
     $thisUrl = $Path->withoutGet();
 
-    $pageTitle = "Задачи";
+    $pageTitle = "Настройки профиля";
 
-include "App/views/task/task.php";
+include "App/views/profile/profile_settings.php";
 //var_dump($paginationUrl);
 
 }

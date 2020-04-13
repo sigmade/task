@@ -13,11 +13,11 @@
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
                         <li>
-                            <a href="#"><em class="fa fa-user"></em>Profile</a>
+                            <a href="/profile"><em class="fa fa-user"></em>Profile</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><em class="fa fa-bar-chart"></em>Settings</a>
+                            <a href="/profile/settings"><em class="fa fa-bar-chart"></em>Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li>

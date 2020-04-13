@@ -15,6 +15,7 @@ class TextSecurity
         $string = htmlspecialchars($string, ENT_QUOTES);
         $string = addslashes($string);
         $string = str_replace(["`"], ["&lsquo;"], $string);
+        $string = trim($string);
 
         return $string;
     }

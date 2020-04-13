@@ -18,7 +18,7 @@ class Task
     
     public function create($array)
     {
-        $title = $array["title"];
+        $title = TextSecurity::shield_hard($array["title"]);
         $from_user_id = $_COOKIE["user_id"];
         $for_user_id = $array["for_user_id"];
         $date_deadline = (!$array["date_deadline"]) ? 0 : strtotime($array["date_deadline"]);

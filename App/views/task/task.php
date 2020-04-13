@@ -101,7 +101,7 @@
                         </tbody>
                         </table>
                 <? if($taskItems["stack"]) {
-                    $paginationUrl = $thisUrl."?/p=";
+                    $paginationUrl = $thisUrl."?p=";
                     $stack = $taskItems["stack"];
 
                     include "App/views/blocks/pagination.php";

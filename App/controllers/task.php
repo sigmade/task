@@ -45,13 +45,13 @@ if($_GET["method"])
 }
 else
 {
-    $taskItems = $Task->get(["m" => 1, "limit" => 2, "p" => $_GET["p"]]);
+    $taskItems = $Task->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
     $thisUrl = $Path->withoutGet();
 
     $pageTitle = "Задачи";
 
 include "App/views/task/task.php";
-//var_dump($taskItems);
+//var_dump($paginationUrl);
 
 }
 

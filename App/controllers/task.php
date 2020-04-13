@@ -1,7 +1,35 @@
 <?php
 
 
+use App\models\DB;
+
 if(!$Auth->check_auth()) { include "App/views/template.php"; exit;}
+
+/** GLOBAL */
+$Task       = new \App\models\Task();
+$referer    = ($_POST["referer"])? $_POST["referer"] : $_SERVER["HTTP_REFERER"];
+
+/** POST */
+
+if ($_POST["method_name"]) {
+    switch ($_POST["method_name"]):
+        case "create" :
+
+            try {
+                $resTask = $Task->create($_POST);
+                header("Location: ".$referer);
+
+            } catch (Exception $e)
+            {
+                $error      = ["error_text" => $e->getMessage()];
+                $inputs_val = $_POST;
+                include "App/views/task/create.php";
+                exit;
+            }
+
+        break;
+    endswitch;
+}
 
 /** GET */
 if($_GET["method"])
@@ -17,6 +45,13 @@ if($_GET["method"])
 }
 else
 {
+    $taskItems = $Task->get(["m" => 1, "limit" => 30, "p" => $_GET["p"]]);
+
+
     $pageTitle = "Задачи";
-    include "App/views/task/task.php";
+
+include "App/views/task/task.php";
+//var_dump($taskItems);
+
 }
+

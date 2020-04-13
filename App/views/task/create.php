@@ -21,6 +21,14 @@
             <li class="active">Создать</li>
         </ol>
     </div><!--/.row-->
+    <? if ($error) {?>
+    <div class="row" >
+        <div class="alert alert-danger" role="alert" style="padding: 20px; margin: 20px;">
+            <? echo $error["error_text"]; ?>
+        </div>
+    </div>
+
+    <? } ?>
 
     <div class="row">
         <div class="col-lg-12">
@@ -40,9 +48,11 @@
             </div>
             <div class="col-md-6">
                 <form action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="referer" value="<? echo $referer; ?>">
+                    <input type="hidden" name="method_name" value="create">
                     <div class="form-group">
                         <label>Заголовок</label>
-                        <input class="form-control" name="title" type="text" value="">
+                        <input class="form-control" name="title" type="text" value="<? echo $inputs_val["title"]; ?>" required>
                     </div>
                     <div class="form-group">
                         <label>Для кого?</label>
@@ -55,9 +65,7 @@
                     </div>
                     <div class="form-group">
                         <label>Дата когда задача должна быть выполнена (Deadline)</label>
-                        <input type="date" id="start" name="trip-start"
-                               value="2020-01-01"
-                               min="2018-01-01" max="2025-12-31">
+                        <input type="date" id="start" name="date_deadline" value="<? echo $inputs_val["date_deadline"]; ?>">
                     </div>
                     <div class="form-group">
                         <label>Текст</label>

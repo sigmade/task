@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><? echo $pageTitle; ?></title>
     <? require_once "App/views/blocks/csslumino.php" ?>
+    <style>
+        .forAvatar{
+            display: block;
+            width: 150px;
+            height: 150px;
+            background: no-repeat center / cover;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
 <? require_once "App/views/blocks/header.php" ?>
@@ -36,7 +45,7 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <a href="">
-                            <img src="http://lorempixel.com/150/150/people/" alt="" class="img-circle">
+                            <span class="forAvatar" style="background-image:url(<? echo $profileInfo["avatar_big_url"]; ?>);"></span>
                         </a>
                         <div class="form-group" style="margin-top: 15px;">
                             <label for="" style="margin-bottom: 15px;">Добавить фотографию</label>
@@ -113,5 +122,6 @@
             if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
         })
     </script>
+<?/* var_dump($profileInfo); */?>
 </body>
 </html>

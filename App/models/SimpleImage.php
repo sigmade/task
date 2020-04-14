@@ -9,7 +9,7 @@
  *
  */
 
-namespace abeautifulsite;
+namespace App\models;
 use Exception;
 
 /**

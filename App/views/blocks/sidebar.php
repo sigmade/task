@@ -32,6 +32,25 @@
                     </a></li>
             </ul>
         </li>
+        <li class="parent ">
+            <a data-toggle="collapse" href="#sub-item-2">
+                <em class="fa fa-clone">&nbsp;</em> Приглашения <span href="#sub-item-2" class="icon pull-right">
+                    <svg class="bi bi-chevron-compact-down" width="1em" height="1em" viewBox="0 0 16 16"
+                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd"
+        d="M1.553 6.776a.5.5 0 01.67-.223L8 9.44l5.776-2.888a.5.5 0 11.448.894l-6 3a.5.5 0 01-.448 0l-6-3a.5.5 0 01-.223-.67z"
+        clip-rule="evenodd"/>
+</svg></span>
+            </a>
+            <ul class="children collapse" id="sub-item-2">
+                <li><a class="" href="/invite">
+                        <span class="fa fa-arrow-right">&nbsp;</span> Мои
+                    </a></li>
+                <li><a class="" href="#">
+                        <span class="fa fa-arrow-right">&nbsp;</span> Для меня
+                    </a></li>
+            </ul>
+        </li>
 <!--        <li><a href="widgets.html"><em class="fa fa-calendar">&nbsp;</em> Widgets</a></li>
         <li><a href="charts.html"><em class="fa fa-bar-chart">&nbsp;</em> Charts</a></li>
         <li><a href="elements.html"><em class="fa fa-toggle-off">&nbsp;</em> UI Elements</a></li>

@@ -93,8 +93,9 @@
                 </div>
                 <div class="col-sm-5">
                     <div class="list-group">
-                        <a href="" class="list-group-item">Обновить токен (снять автризацию на других устройствах)</a>
-                        <a href="" class="list-group-item list-group-item-danger">Удалить аккаунт</a>
+                        <a href="/profile/change_token" class="list-group-item">Обновить токен (снять автризацию на
+                            других устройствах)</a>
+                        <a href="/profile/delete" class="list-group-item list-group-item-danger">Удалить аккаунт</a>
                     </div>
                 </div>
             </div>

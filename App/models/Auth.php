@@ -185,6 +185,18 @@ class Auth
 
     }
 
+    public function changeToken()
+    {
+        $me = $_COOKIE["user_id"];
+        $token = $this->newToken();
+
+        $DB = new DB();
+        $DB->update("users", ["token" => $token], "id= " . $me, true);
+
+        return $this->setAuth($me, $token);
+
+    }
+
     private function newToken()
     {
         return md5(time().rand());

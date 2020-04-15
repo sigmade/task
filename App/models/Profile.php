@@ -75,6 +75,28 @@ class Profile
 
     }
 
+    public function delete($user_id = null)
+    {
+        $user_id = (!is_numeric($user_id)) ? $_COOKIE["user_id"] : $user_id;
+        $resItem = $this->DB->get_row("SELECT avatar FROM users WHERE id =" . $user_id);
+
+        //delete avatar
+
+        if ($resItem["avatar"]) {
+            if (file_exists($this->avatarPath . "/big/" . $resItem["avatar"])) {
+                unlink($this->avatarPath . "/big/" . $resItem["avatar"]);
+            }
+            if (file_exists($this->avatarPath . "/small/" . $resItem["avatar"])) {
+                unlink($this->avatarPath . "/small/" . $resItem["avatar"]);
+            }
+        }
+
+        //delete user
+        $this->DB->delete("users", "id =" . $user_id, true);
+        return true;
+
+    }
+
     private function checkDir()
     {
         if(!is_dir($this->avatarPath."/big")){ mkdir($this->avatarPath."/big", null, true);}

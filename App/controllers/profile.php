@@ -56,6 +56,17 @@ if($_GET["method"])
             $pageTitle = "Настройки профиля";
             include "App/views/profile/profile_settings.php";
             break;
+        case "change_token":
+
+            $Auth->changeToken();
+            header("Location: " . $referer);
+            break;
+        case "delete":
+
+            $Profile->delete();
+            $Auth->logout();
+            header("Location: /");
+            break;
 
     endswitch;
 }

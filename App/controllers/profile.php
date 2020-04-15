@@ -67,18 +67,35 @@ if($_GET["method"])
             $Auth->logout();
             header("Location: /");
             break;
+        case is_numeric($_GET["method"]):
+
+            $profileInfo = $Profile->get(["m" => 1, "id" => $_GET["method"]]);
+            if (!$profileInfo) {
+                $error["error_text"] = "Такого пользователья не существует";
+                include "App/views/for_error.php";
+                exit;
+            } else {
+                $thisUrl = $Path->withoutGet();
+                $pageTitle = "Информация о профиле " . $profileInfo["nickname"];
+                include "App/views/profile/profile_show.php";
+            }
+
+            break;
 
     endswitch;
 }
 else
 {
-    $taskItems = $Task->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
-    $thisUrl = $Path->withoutGet();
-
-    $pageTitle = "Настройки профиля";
-
-include "App/views/profile/profile_settings.php";
-//var_dump($paginationUrl);
+    $profileInfo = $Profile->get(["m" => 1]);
+    if (!$profileInfo) {
+        $error["error_text"] = "Такого пользователья не существует";
+        include "App/views/for_error.php";
+        exit;
+    } else {
+        $thisUrl = $Path->withoutGet();
+        $pageTitle = "Информация о профиле " . $profileInfo["nickname"];
+        include "App/views/profile/profile_show.php";
+    }
 
 }
 

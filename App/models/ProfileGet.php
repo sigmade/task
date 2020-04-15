@@ -10,7 +10,7 @@ class ProfileGet
 
     private $limit = 30;
     private $DB;
-    private $no_photo = "resources/img/nobody.jpg";
+    private $no_photo = "/resources/img/nobody.jpg";
 
 
     public function __construct()

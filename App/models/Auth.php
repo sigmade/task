@@ -146,6 +146,45 @@ class Auth
 
     }
 
+    public function change_password($array)
+    {
+        if(!$array["new_pass1"] and $array["new_pass1"] != $array["new_pass2"])
+        {
+            throw new \Exception("Не верные параметры для нового пользователя");
+        }
+
+        $me = $_COOKIE["user_id"];
+
+        $DB = new DB();
+        $email= $DB->get_row("SELECT email FROM users WHERE id =".$me)["email"];
+        $newPass = password_hash($array["new_pass1"], PASSWORD_DEFAULT);
+
+        //обновим пароль
+        $DB->update("users", ["pass" => $newPass], "id = ".$me, true);
+
+        // Отправка письма
+        $PATH = new Path();
+        $body = file_get_contents("App/views/mail/change_password.php");
+        $body = str_replace(["{{new_pass}}"], [$array["new_pass1"]], $body);
+
+        $M = new libmail("utf-8");
+        //$M->From( "**mail" );
+        //$M->smtp_on("smtp.yandex.ru","**mail","**pass");
+        $M->To($email);
+        $M->Subject("Смена пароля");
+        $M->log_on(true);
+        $M->Body($body, "html");
+        $M->Send();
+
+        if(!$M->status_mail["status"])
+        {
+            throw new \Exception($M->status_mail["message"]);
+        }
+
+        return true;
+
+    }
+
     private function newToken()
     {
         return md5(time().rand());

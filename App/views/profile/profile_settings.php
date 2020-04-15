@@ -55,11 +55,11 @@
                     <div class="col-sm-9">
                         <div class="form-group">
                             <label for="">Ваше имя (nickname)</label><br>
-                            <input style="form-control" type="text" name="nickname">
+                            <input style="form-control" type="text" name="nickname" value="<? echo $profileInfo["nickname"]; ?>">
                         </div>
                         <div class="form-group">
                             <label for="">Текст</label><br>
-                            <textarea name="text" id="editor1" ></textarea>
+                            <textarea name="text" id="editor1"  value=""><? echo $profileInfo["text"]; ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -79,16 +79,17 @@
                         <input type="hidden" name="method_name" value="edit_pass">
                         <div class="form-group">
                             <label for="">Укажите новый пароль</label>
-                            <input type="text" class="form-control" name="new_pass1">
+                            <input type="password" class="form-control" name="new_pass1" required>
                         </div>
                         <div class="form-group">
                             <label for="">Укажите новый пароль (повтор)</label>
-                            <input type="text" class="form-control" name="new_pass2">
+                            <input type="password" class="form-control" name="new_pass2" required>
+                        </div>
+                        <div class="text-left" style="margin-top: 15px;">
+                            <input class="btn btn-success" type="submit" name="submit" value="Сохранить">
                         </div>
                     </form>
-                    <div class="text-left" style="margin-top: 15px;">
-                        <input class="btn btn-success" type="submit" name="" value="Сохранить">
-                    </div>
+
                 </div>
                 <div class="col-sm-5">
                     <div class="list-group">

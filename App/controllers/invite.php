@@ -6,7 +6,7 @@ if (!$Auth->check_auth()) {
 }
 
 /** GLOBAL */
-$Task = new \App\models\Task();
+$Invite = new \App\models\Invite();
 $referer = ($_POST["referer"]) ? $_POST["referer"] : $_SERVER["HTTP_REFERER"];
 
 /** POST */
@@ -16,14 +16,14 @@ if ($_POST["method_name"]) {
         case "create" :
 
             try {
-                $resTask = $Task->create($_POST);
-                header("Location: " . $referer);
+                $resInv = $Invite->create($_POST);
+                //   header("Location: " . $referer);
 
             } catch (Exception $e) {
                 $error = ["error_text" => $e->getMessage()];
                 $inputs_val = $_POST;
-                include "App/views/task/create.php";
-                exit;
+                //   include "App/views/task/create.php";
+                //   exit;
             }
 
             break;
@@ -41,13 +41,13 @@ if ($_GET["method"]) {
 
     endswitch;
 } else {
-    $taskItems = $Task->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
+    // $taskItems = $Task->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
     $thisUrl = $Path->withoutGet();
 
     $pageTitle = "Приглашение";
 
     include "App/views/invite/my.php";
-//var_dump($paginationUrl);
+    // var_dump($_POST);
 
 }
 

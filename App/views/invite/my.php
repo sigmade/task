@@ -27,6 +27,13 @@
             <h1 class="page-header"><? echo $pageTitle; ?></h1>
         </div>
     </div><!--/.row-->
+    <? if ($error) : ?>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class='alert alert-danger mt-3' role='alert'><b>Ошибка! </b><? echo $error['error_text']; ?></div>
+            </div>
+        </div>
+    <? endif; ?>
 
     <div class="panel panel-container">
         <div class="row" style="margin-bottom: 35px;>
@@ -37,8 +44,7 @@
             <div class="input-group" style="margin: 20px;">
                 <input type="email" name="email" class="form-control" placeholder="Укажите email" required>
                 <div class="input-group-btn">
-                    <input type="email" name="email" value="Создать приглашение" class="btn btn-success"
-                           placeholder="Укажите email" required>
+                    <input type="submit" name="submit" value="Создать приглашение" class="btn btn-success">
                 </div>
             </div>
         </form>

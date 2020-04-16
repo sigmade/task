@@ -7,11 +7,17 @@ use App\models\mail\libmail;
 use mysql_xdevapi\Exception;
 
 
-class invite
+class Invite
 {
     public function __construct()
     {
         $this->DB = new DB();
+    }
+
+    public function get($array)
+    {
+        $O = new InviteGet();
+        return $O->get($array);
     }
 
     public function create($array)

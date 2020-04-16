@@ -22,6 +22,9 @@ class ProfileGet
     {
         switch ($array["m"]):
             case 1: $res = $this->method_1($array); break; //Вывод by ID
+            case 2:
+                $res = $this->method_2($array);
+                break; //Вывод by email
 
         endswitch;
 
@@ -47,36 +50,29 @@ class ProfileGet
 
     private function method_2($array){
 
-        $limit = (!is_numeric($array["limit"]))? $this->limit : $array["limit"];
-        $page  = (!is_numeric($array["p"]))? 0 : $array["p"];
-        $me    = $_COOKIE["user_id"];
+        if (!$email = array_filter($array["email"], function ($item) {
+            return TextSecurity::is_email($item);
+        })) {
+            return false;
+        }
 
-        //проверки
+        // выборка из БД
 
-        // сколько всего записей
+        $sql = "SELECT id,email,nickname FROM users WHERE email IN ('" . implode("','", $email) . "')";
+        $resItems = $this->DB->get_rows($sql);
+        if (!$resItems) {
+            return false;
+        }
 
-        $sql = "SELECT COUNT(*) AS n FROM task WHERE from_user_id = ".$me;
-        $resCount = $this->DB->get_row($sql)["n"];
-        if (!$resCount){ return false;}
+        foreach ($resItems as $index => $resItem) {
 
-        //Counter
-        $arr = [
-            "limit" => $limit,
-            "page" => $page,
-            "posts" => $resCount,
-            "max_pages" => 3,
-        ];
+            if (!$resItem["nickname"]) {
+                $resItems[$index]["nickname"] = explode("@", $resItem["email"])[0];
+            }
 
-        $resNav = Counter::get_nav($arr);
+        }
 
-        //Делаем быборку записей
-        $sql = "SELECT * FROM task WHERE from_user_id = ".$me." LIMIT ".$resNav["start"].",".$resNav["limit"];
-        $resItems = $this->DB->get_rows($sql, true);
-
-        //response
-        $res = ["items" => $resItems, "stack" => $resNav["stack"]];
-        // $res = ["items" => 1, "stack" => 1];
-        return $res;
+        return ["items" => $resItems];
 
     }
 }

@@ -51,6 +51,7 @@
     </div>
 </div>
 <div class="panel panel-container">
+    <? if ($resInv["items"]) : ?>
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive" style="padding: 25px;">
@@ -75,13 +76,29 @@
                         </th>
                     </thead>
                     <tbody>
-
+                    <?
+                    $statuses = [
+                        0 => ["type" => "default", "text" => "Ожидается"],
+                        1 => ["type" => "success", "text" => "Принято"],
+                        2 => ["type" => "danger", "text" => "Отклонен"],
+                    ];
+                    foreach ($resInv["items"] as $item) { ?>
                     <tr data-index="0">
-                        <td class=""><a href="">11 13 19</a></td>
-                        <td style="text-right"><a href="">ss@ss</a></td>
-                        <td style="text-right"><span class="label label-default">Ожидается</span></td>
+                        <td class=""><? echo date("d. m. Y", $item["date"]); ?></td>
                         <td style="text-right">
-                            <a title="Скрыть?" href="<? echo $item["ID"]; ?>" style="margin: 5px;">
+                            <? if ($resInv['users_info'][$item["for_email"]]) {
+                                $u_inf = $resInv['users_info'][$item["for_email"]];
+                                ?>
+                                <a href="/profile/<? echo $u_inf["id"] ?>"><? echo $u_inf["email"] ?></a>
+                            <? } else { ?>
+                                <span><? echo $item["for_email"] ?></span>
+                            <? } ?>
+                        </td>
+                        <td style="text-right"><span
+                                    class="label label-<? echo $statuses[$item["status"]]["type"] ?>"><? echo $statuses[$item["status"]]["text"] ?></span>
+                        </td>
+                        <td style="text-right">
+                            <!--                            <a title="Скрыть?" href="<? /* /*echo $item["ID"]; */ ?>" style="margin: 5px;">
                                 <svg class="bi bi-check-box" width="1em" height="1em" viewBox="0 0 16 16"
                                      fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
@@ -91,13 +108,14 @@
                                           d="M1.5 13A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V8a.5.5 0 00-1 0v5a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V3a.5.5 0 01.5-.5h8a.5.5 0 000-1H3A1.5 1.5 0 001.5 3v10z"
                                           clip-rule="evenodd"/>
                                 </svg>
-                            </a>
+                            </a>-->
                         </td>
                     </tr>
-
+                    <? } ?>
                     </tbody>
                 </table>
-                <? if ($taskItems["stack"]) {
+                <? var_dump($resInv['users_info'][41]["sigmadel177@gmail.com"]); //$resInv["users_info" ][41]["id"]?>
+                <? if ($resInv["stack"]) {
                     $paginationUrl = $thisUrl . "?p=";
                     $stack = $taskItems["stack"];
 
@@ -109,7 +127,7 @@
         </div><!--/.row-->
     </div>
 </div>
-
+<? endif; ?>
 </div>    <!--/.main-->
 
 <? require_once "App/views/blocks/jslumino.php" ?>

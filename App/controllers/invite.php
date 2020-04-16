@@ -41,7 +41,7 @@ if ($_GET["method"]) {
 
     endswitch;
 } else {
-    // $taskItems = $Task->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
+    $resInv = $Invite->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
     $thisUrl = $Path->withoutGet();
 
     $pageTitle = "Приглашение";

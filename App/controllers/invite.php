@@ -48,13 +48,21 @@ if ($_GET["method"]) {
             }
 
             break;
+        case "for_me":
+
+            $resInv = $Invite->get(["m" => 2, "limit" => 20, "p" => $_GET["p"]]);
+            $thisUrl = $Path->withoutGet();
+            $pageTitle = "Приглашения для меня";
+            include "App/views/invite/for_me.php";
+
+            break;
 
     endswitch;
 } else {
     $resInv = $Invite->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
     $thisUrl = $Path->withoutGet();
 
-    $pageTitle = "Приглашение";
+    $pageTitle = "Приглашения";
 
     include "App/views/invite/my.php";
     // var_dump($_POST);

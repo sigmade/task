@@ -23,7 +23,9 @@ class InviteGet
             case 1:
                 $res = $this->method_1($array);
                 break; //Вывод всех "моих" записей
-            //case 2: $res = $this->method_2($array); break; //Вывод всех "для меня" записей
+            case 2:
+                $res = $this->method_2($array);
+                break; //Вывод всех "для меня" записей
 
         endswitch;
 
@@ -65,6 +67,56 @@ class InviteGet
 
         $P = new Profile();
         $usersInfo = $P->get(["m" => 2, "email" => array_column($resItems, "for_email")])["items"];
+        if ($usersInfo) {
+            $usersInfo = array_combine(array_column($usersInfo, "id"), $usersInfo);
+        }
+
+
+        //response
+        $res = ["items" => $resItems, "users_info" => $usersInfo, "stack" => $resNav["stack"]];
+        // $res = ["items" => 1, "stack" => 1];
+        return $res;
+
+    }
+
+    private function method_2($array)
+    {
+
+        $limit = (!is_numeric($array["limit"])) ? $this->limit : $array["limit"];
+        $page = (!is_numeric($array["p"])) ? 0 : $array["p"];
+        $me = $_COOKIE["user_id"];
+
+        //информация пром меня
+
+        $sql = "SELECT * FROM users WHERE id =" . $me;
+        $resMe = $this->DB->get_row($sql);
+
+        // сколько всего записей
+
+        $sql = "SELECT COUNT(*) AS n FROM invites WHERE delete_2 != 1 AND for_email = '" . $resMe["email"] . "'";
+        $resCount = $this->DB->get_row($sql)["n"];
+        if (!$resCount) {
+            return false;
+        }
+
+        //Counter
+        $arr = [
+            "limit" => $limit,
+            "page" => $page,
+            "posts" => $resCount,
+            "max_pages" => 3,
+        ];
+
+        $resNav = Counter::get_nav($arr);
+
+        //Делаем быборку записей
+        $sql = "SELECT * FROM invites WHERE delete_2 != 1 AND for_email = '" . $resMe["email"] . "' LIMIT " . $resNav["start"] . "," . $resNav["limit"];
+        $resItems = $this->DB->get_rows($sql, true);
+
+        // соберем инфо про пользователя по email
+
+        $P = new Profile();
+        $usersInfo = $P->get(["m" => 3, "ID" => array_column($resItems, "from_user_id")])["items"];
         if ($usersInfo) {
             $usersInfo = array_combine(array_column($usersInfo, "id"), $usersInfo);
         }

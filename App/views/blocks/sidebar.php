@@ -46,7 +46,7 @@
                 <li><a class="" href="/invite">
                         <span class="fa fa-arrow-right">&nbsp;</span> Мои
                     </a></li>
-                <li><a class="" href="#">
+                <li><a class="" href="/invite/for_me">
                         <span class="fa fa-arrow-right">&nbsp;</span> Для меня
                     </a></li>
             </ul>

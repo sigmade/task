@@ -83,4 +83,45 @@ class Invite
 
     }
 
+    public function delete($id)
+    {
+        if (!is_numeric($id)) {
+            throw new \Exception("Не корректный ID");
+        }
+
+        $me = $_COOKIE["user_id"];
+
+        // сделаем выборку этой записи
+
+        $sql = "SELECT * FROM invites WHERE ID =" . $id;
+        $resItem = $this->DB->get_row($sql);
+        if (!$resItem) {
+            throw new \Exception("Такой записи нет");
+        }
+
+        // информация про пользователя
+
+        $sql = "SELECT * FROM users WHERE id =" . $me;
+        $resUser = $this->DB->get_row($sql);
+
+        // есть ли право на удаление
+
+        if ($resItem["from_user_id"] != $me and $resItem["for_email"] != $resUser["email"]) {
+            throw new \Exception("Не достаточно прав");
+        }
+
+        if ($resItem["from_user_id"] != $me) {
+            $this->DB->update("invites", ["delete_2" => 1], "ID = " . $id, true);
+            return true;
+        }
+
+        if ($resItem["delete_2"]) {
+            $this->DB->delete("invites", "ID = " . $id, true);
+            return true;
+        } else {
+            $this->DB->update("invites", ["delete_1" => 1], "ID = " . $id, true);
+            return true;
+        }
+    }
+
 }

@@ -33,10 +33,20 @@ if ($_POST["method_name"]) {
 /** GET */
 if ($_GET["method"]) {
     switch ($_GET["method"]):
-        case "create":
+        case "delete":
 
-            $pageTitle = "Добавить задачу";
-            include "App/views/task/create.php";
+            try {
+                $Invite->delete($_GET["ID"]);
+                header("Location: " . $referer);
+            } catch (Exception $e) {
+                $error = ["error_text" => $e->getMessage()];
+
+                $resInv = $Invite->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
+                $thisUrl = $Path->withoutGet();
+                $pageTitle = "Приглашение";
+                include "App/views/invite/my.php";
+            }
+
             break;
 
     endswitch;

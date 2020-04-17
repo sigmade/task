@@ -41,7 +41,7 @@ class InviteGet
 
         // сколько всего записей
 
-        $sql = "SELECT COUNT(*) AS n FROM invites WHERE from_user_id = " . $me;
+        $sql = "SELECT COUNT(*) AS n FROM invites WHERE delete_1 != 1 AND from_user_id = " . $me;
         $resCount = $this->DB->get_row($sql)["n"];
         if (!$resCount) {
             return false;
@@ -58,7 +58,7 @@ class InviteGet
         $resNav = Counter::get_nav($arr);
 
         //Делаем быборку записей
-        $sql = "SELECT * FROM invites WHERE from_user_id = " . $me . " LIMIT " . $resNav["start"] . "," . $resNav["limit"];
+        $sql = "SELECT * FROM invites WHERE delete_1 != 1 AND from_user_id = " . $me . " LIMIT " . $resNav["start"] . "," . $resNav["limit"];
         $resItems = $this->DB->get_rows($sql, true);
 
         // соберем инфо про пользователя по email

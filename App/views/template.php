@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                Основной код
+                <a href="/login">Войти</a>
             </div>
             <div class="col-md-2"></div>
         </div><!--/.row-->

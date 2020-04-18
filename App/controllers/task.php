@@ -41,6 +41,15 @@ if($_GET["method"])
             $pageTitle = "Добавить задачу";
             include "App/views/task/create.php";
             break;
+        case "change_status":
+
+            try {
+                $Task->change_status($_GET);
+                header("Location: " . $referer);
+            } catch (Exception $e) {
+                $error = ["error_text" => $e->getMessage()];
+                include "App/views/for_error.php";
+            }
 
     endswitch;
 }

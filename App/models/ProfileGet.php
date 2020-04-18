@@ -138,7 +138,7 @@ class ProfileGet
         //делаем выборку users
         $sql = "SELECT * FROM users WHERE ";
         $sql1 = ($IDs) ? "ID IN (" . implode(",", $IDs) . ")" : null;
-        $sql2 = ($emails) ? "emails IN ('" . implode("','", $emails) . "'')" : null;
+        $sql2 = ($emails) ? "email IN ('" . implode("','", $emails) . "')" : null;
         if ($sql1 && $sql2) {
             $sql1 .= " OR ";
         }

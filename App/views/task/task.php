@@ -93,12 +93,12 @@
                                   <td style="text-right">
                                       <a title="В процессе"
                                          href="/task/change_status/status/no/ID/<? echo $item["ID"] ?>"
-                                         class="glyphicon glyphicon-time"></a>
+                                         class="glyphicon glyphicon-time js-confirm"></a>
                                       <a title="Выполнено"
                                          href="/task/change_status/status/1/ID/<? echo $item["ID"] ?>"
-                                         class="glyphicon glyphicon-remove-sign"></a>
+                                         class="glyphicon glyphicon-ok js-confirm"></a>
                                       <a title="Отклонить" href="/task/change_status/status/2/ID/<? echo $item["ID"] ?>"
-                                         class="glyphicon glyphicon-trash js-confirm"></a>
+                                         class="glyphicon glyphicon-remove-sign js-confirm"></a>
 
                                       <span style="margin: 8px;"> | </span>
 
@@ -125,7 +125,7 @@
     </div>
 
 </div>	<!--/.main-->
-
+    <? require_once "App/views/blocks/scripts.php" ?>
 <? require_once "App/views/blocks/jslumino.php" ?>
 <script>
     window.onload = function () {

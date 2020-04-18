@@ -54,15 +54,21 @@
                         <label>Заголовок</label>
                         <input class="form-control" name="title" type="text" value="<? echo $inputs_val["title"]; ?>" required>
                     </div>
-                    <div class="form-group">
-                        <label>Для кого?</label>
-                        <select class="form-control"name="from_user_id" id="" disabled>
-                            <option value="">Test</option>
-                            <option value="">Test</option>
-                            <option value="">Test</option>
-                            <option value="">Test</option>
-                        </select>
-                    </div>
+
+                    <? if ($resTeam["items"]): ?>
+
+                        <div class="form-group">
+                            <label>Для кого?</label>
+                            <select class="form-control" name="from_user_id" id="">
+                                <option value="">Для себя</option>
+                                <? foreach ($resTeam["items"] as $item) { ?>
+                                    <option value="<? echo $item["ID"] ?>"><? echo $item["email"] ?></option>
+                                <? } ?>
+                            </select>
+                        </div>
+
+                    <? endif; ?>
+
                     <div class="form-group">
                         <label>Дата когда задача должна быть выполнена (Deadline)</label>
                         <input type="date" id="start" name="date_deadline" value="<? echo $inputs_val["date_deadline"]; ?>">
@@ -90,6 +96,8 @@
     </div>
 
 </div>	<!--/.main-->
+
+<? // var_dump($resTeam); ?>
 
 <? require_once "App/views/blocks/jslumino.php" ?>
 

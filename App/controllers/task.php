@@ -7,6 +7,7 @@ if (!$Auth->check_auth()) {
 
 /** GLOBAL */
 $Task       = new \App\models\Task();
+$Profile = new \App\models\Profile();
 $referer    = ($_POST["referer"])? $_POST["referer"] : $_SERVER["HTTP_REFERER"];
 
 /** POST */
@@ -36,7 +37,7 @@ if($_GET["method"])
 {
     switch ($_GET["method"]):
         case "create":
-
+            $resTeam = $Profile->get(["m" => 4]);
             $pageTitle = "Добавить задачу";
             include "App/views/task/create.php";
             break;

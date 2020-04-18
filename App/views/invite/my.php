@@ -107,7 +107,7 @@
                     <? } ?>
                     </tbody>
                 </table>
-                <? var_dump($item["for_email"]); ?>
+                <? //var_dump($item["for_email"]); ?>
                 <? if ($resInv["stack"]) {
                     $paginationUrl = $thisUrl . "?p=";
                     $stack = $resInv["stack"];

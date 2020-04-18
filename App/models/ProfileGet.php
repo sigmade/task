@@ -28,6 +28,9 @@ class ProfileGet
             case 3:
                 $res = $this->method_3($array);
                 break; //Вывод by ID array
+            case 4:
+                $res = $this->method_4($array);
+                break; //Вывод пользователей в команде
 
         endswitch;
 
@@ -102,6 +105,53 @@ class ProfileGet
                 $resItems[$index]["nickname"] = explode("@", $resItem["email"])[0];
             }
 
+        }
+
+        return ["items" => $resItems];
+
+    }
+
+    private function method_4($array = null)
+    {
+
+        $me = $_COOKIE["user_id"];
+        $sql = "SELECT ID, email FROM users WHERE ID=" . $me;
+        $resMe = $this->DB->get_row($sql);
+
+        //Соберем записи из invites
+        $sql = "SELECT for_email, from_user_id FROM invites WHERE status = 1 AND (from_user_id = " . $me . " OR for_email = '" . $resMe["email"] . "')";
+        $resInv = $this->DB->get_rows($sql);
+        if (!$resInv) {
+            return false;
+        }
+
+
+        //разделим
+        $IDs = array_unique(array_column($resInv, "from_user_id", "from_user_id"));
+        $emails = array_unique(array_column($resInv, "for_email", "for_email"));
+        unset($IDs[$me], $emails[$resMe["email"]]);
+
+        if (!$IDs and !$emails) {
+            return false;
+        }
+
+        //делаем выборку users
+        $sql = "SELECT * FROM users WHERE ";
+        $sql1 = ($IDs) ? "ID IN (" . implode(",", $IDs) . ")" : null;
+        $sql2 = ($emails) ? "emails IN ('" . implode("','", $emails) . "'')" : null;
+        if ($sql1 && $sql2) {
+            $sql1 .= " OR ";
+        }
+
+        $resItems = $this->DB->get_rows($sql . $sql1 . $sql2);
+        if (!$resItems) {
+            return false;
+        }
+
+        foreach ($resItems as $index => $resItem) {
+            if (!$resItem["nickname"]) {
+                $resItems[$index]["nickname"] = explode("@", $resItem["email"])[0];
+            }
         }
 
         return ["items" => $resItems];

@@ -23,6 +23,9 @@ class TaskGet
             case 2:
                 $res = $this->method_2($array);
                 break; //Вывод ID
+            case 3:
+                $res = $this->method_3($array);
+                break; //Вывод всех записей для меня
         endswitch;
 
         return $res;
@@ -91,6 +94,44 @@ class TaskGet
 
         //response
         $res = ["item" => $resItem, "usersInfo" => $usersInfo];
+        return $res;
+
+    }
+
+    private function method_3($array)
+    {
+
+        $limit = (!is_numeric($array["limit"])) ? $this->limit : $array["limit"];
+        $page = (!is_numeric($array["p"])) ? 0 : $array["p"];
+        $me = $_COOKIE["user_id"];
+
+        //проверки
+
+        // сколько всего записей
+
+        $sql = "SELECT COUNT(*) AS n FROM task WHERE deleted = 0 AND for_user_id = " . $me;
+        $resCount = $this->DB->get_row($sql)["n"];
+        if (!$resCount) {
+            return false;
+        }
+
+        //Counter
+        $arr = [
+            "limit" => $limit,
+            "page" => $page,
+            "posts" => $resCount,
+            "max_pages" => 3,
+        ];
+
+        $resNav = Counter::get_nav($arr);
+
+        //Делаем быборку записей
+        $sql = "SELECT * FROM task WHERE deleted = 0 AND for_user_id = " . $me . " LIMIT " . $resNav["start"] . "," . $resNav["limit"];
+        $resItems = $this->DB->get_rows($sql, true);
+
+        //response
+        $res = ["items" => $resItems, "stack" => $resNav["stack"]];
+        // $res = ["items" => 1, "stack" => 1];
         return $res;
 
     }

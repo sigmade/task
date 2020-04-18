@@ -77,7 +77,7 @@ class Task
         }
 
         //сделаем выборку этой записи
-        $sql = "SELECT * FROM task WHERE ID = " . $id . " AND (from_user_id = " . $me . " OR for_user_id = " . $me . ")";
+        $sql = "SELECT * FROM task WHERE ID = " . $id . " AND from_user_id =" . $me;
         $resItem = $this->DB->get_row($sql);
         if (!$resItem) {
             throw new \Exception("Недостаточно прав, или неверный ID");

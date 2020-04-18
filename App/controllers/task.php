@@ -44,6 +44,7 @@ if ($_POST["method_name"]) {
             }
 
             break;
+
     endswitch;
 }
 
@@ -84,6 +85,13 @@ if($_GET["method"])
             $pageTitle = "Добавить задачу";
             include "App/views/task/edit.php";
             break;
+        case "for_me":
+
+            $taskItems = $Task->get(["m" => 3, "limit" => 20, "p" => $_GET["p"]]);
+            $thisUrl = $Path->withoutGet();
+            $pageTitle = "Задачи для меня";
+            include "App/views/task/for_me.php";
+            break;
 
     endswitch;
 }
@@ -91,11 +99,9 @@ else
 {
     $taskItems = $Task->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
     $thisUrl = $Path->withoutGet();
-
     $pageTitle = "Задачи";
+    include "App/views/task/task.php";
 
-include "App/views/task/task.php";
-//var_dump($paginationUrl);
 
 }
 

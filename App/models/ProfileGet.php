@@ -36,10 +36,10 @@ class ProfileGet
 
     private function method_1($array){
 
-        $ID = (is_numeric($array["id"]))? $array["id"] : $_COOKIE["user_id"];
+        $ID = (is_numeric($array["ID"])) ? $array["ID"] : $_COOKIE["user_id"];
 
         // сделаем выборку из БД
-        $resItem = $this->DB->get_row("SELECT * FROM users WHERE id = ".$ID);
+        $resItem = $this->DB->get_row("SELECT * FROM users WHERE ID = " . $ID);
         if (!$resItem){ return false;}
 
         //
@@ -61,7 +61,7 @@ class ProfileGet
 
         // выборка из БД
 
-        $sql = "SELECT id,email,nickname FROM users WHERE email IN ('" . implode("','", $email) . "')";
+        $sql = "SELECT ID,email,nickname FROM users WHERE email IN ('" . implode("','", $email) . "')";
         $resItems = $this->DB->get_rows($sql);
         if (!$resItems) {
             return false;
@@ -82,7 +82,7 @@ class ProfileGet
     private function method_3($array)
     {
 
-        if (!$IDs = array_filter($array["id"], function ($item) {
+        if (!$IDs = array_filter($array["ID"], function ($item) {
             return is_numeric($item);
         })) {
             return false;
@@ -90,7 +90,7 @@ class ProfileGet
 
         // выборка из БД
 
-        $sql = "SELECT id,email,nickname FROM users WHERE id IN (" . implode(",", $IDs) . ")";
+        $sql = "SELECT ID,email,nickname FROM users WHERE ID IN (" . implode(",", $IDs) . ")";
         $resItems = $this->DB->get_rows($sql);
         if (!$resItems) {
             return false;

@@ -68,7 +68,7 @@ class InviteGet
         $P = new Profile();
         $usersInfo = $P->get(["m" => 2, "email" => array_column($resItems, "for_email")])["items"];
         if ($usersInfo) {
-            $usersInfo = array_combine(array_column($usersInfo, "id"), $usersInfo);
+            $usersInfo = array_combine(array_column($usersInfo, "ID"), $usersInfo);
         }
 
 
@@ -88,7 +88,7 @@ class InviteGet
 
         //информация пром меня
 
-        $sql = "SELECT * FROM users WHERE id =" . $me;
+        $sql = "SELECT * FROM users WHERE ID =" . $me;
         $resMe = $this->DB->get_row($sql);
 
         // сколько всего записей
@@ -118,7 +118,7 @@ class InviteGet
         $P = new Profile();
         $usersInfo = $P->get(["m" => 3, "ID" => array_column($resItems, "from_user_id")])["items"];
         if ($usersInfo) {
-            $usersInfo = array_combine(array_column($usersInfo, "id"), $usersInfo);
+            $usersInfo = array_combine(array_column($usersInfo, "ID"), $usersInfo);
         }
 
 

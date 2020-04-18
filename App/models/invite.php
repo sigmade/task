@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\models;
 
 use App\models\mail\libmail;
-use mysql_xdevapi\Exception;
 
 
 class Invite
@@ -35,14 +33,14 @@ class Invite
         $ownerInfo = $P->get(["m" => 1]);
 
         // собираем информацию про user with email
-        $sql = "SELECT id FROM users WHERE email = '$email'";
+        $sql = "SELECT ID FROM users WHERE email = '$email'";
         $userInfo = $this->DB->get_row($sql);
 
         // была ли такая запись
 
         $sql = "SELECT * FROM invites WHERE (from_user_id = " . $me . " AND for_email = '" . $email . "')";
         if ($userInfo) {
-            $sql .= " OR (from_user_id = " . $userInfo["id"] . " AND for_email = '" . $ownerInfo["email"] . "')";
+            $sql .= " OR (from_user_id = " . $userInfo["ID"] . " AND for_email = '" . $ownerInfo["email"] . "')";
         }
 
         $resItem = $this->DB->get_row($sql);
@@ -101,7 +99,7 @@ class Invite
 
         // информация про пользователя
 
-        $sql = "SELECT * FROM users WHERE id =" . $me;
+        $sql = "SELECT * FROM users WHERE ID =" . $me;
         $resUser = $this->DB->get_row($sql);
 
         // есть ли право на удаление
@@ -122,6 +120,38 @@ class Invite
             $this->DB->update("invites", ["delete_1" => 1], "ID = " . $id, true);
             return true;
         }
+    }
+
+    public function change_status($array)
+    {
+        if (!is_numeric($status = $array["status"]) or !is_numeric($id = $array["ID"])) {
+            throw new \Exception("Не корректные параметры id или status");
+        }
+
+        if ($status > 2) {
+            $status = 2;
+        }
+
+        $me = $_COOKIE["user_id"];
+
+        // сделаем выборку этой записи
+        $sql = "SELECT * FROM invites WHERE ID =" . $id;
+        $resItem = $this->DB->get_row($sql);
+        if (!$resItem) {
+            throw new \Exception("Такой записи нет");
+        }
+
+        // информация про пользователя
+        $sql = "SELECT * FROM users WHERE ID =" . $me;
+        $resUser = $this->DB->get_row($sql);
+
+        // есть ли право на удаление
+        if ($resItem["from_user_id"] != $me and $resItem["for_email"] != $resUser["email"]) {
+            throw new \Exception("Не достаточно прав");
+        }
+
+        $this->DB->update("invites", ["status" => $status], "ID = " . $id, true);
+        return true;
     }
 
 }

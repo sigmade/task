@@ -69,7 +69,7 @@ if($_GET["method"])
             break;
         case is_numeric($_GET["method"]):
 
-            $profileInfo = $Profile->get(["m" => 1, "id" => $_GET["method"]]);
+            $profileInfo = $Profile->get(["m" => 1, "ID" => $_GET["method"]]);
             if (!$profileInfo) {
                 $error["error_text"] = "Такого пользователья не существует";
                 include "App/views/for_error.php";

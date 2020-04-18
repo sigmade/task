@@ -78,35 +78,36 @@
                     <tbody>
                     <?
                     $statuses = [
-                        0 => ["type" => "default", "text" => "Ожидается"],
-                        1 => ["type" => "success", "text" => "Принято"],
-                        2 => ["type" => "danger", "text" => "Отклонен"],
+                        0 => ["type" => "default", "text" => "ожидается"],
+                        1 => ["type" => "success", "text" => "принято"],
+                        2 => ["type" => "danger", "text" => "отклонен"],
                     ];
                     foreach ($resInv["items"] as $item) { ?>
-                    <tr data-index="0">
-                        <td class=""><? echo date("d. m. Y", $item["date"]); ?></td>
-                        <td style="text-right">
-                            <? if ($resInv['users_info'][$item["for_email"]]) {
-                                $u_inf = $resInv['users_info'][$item["for_email"]];
-                                ?>
-                                <a href="/profile/<? echo $u_inf["id"] ?>"><? echo $u_inf["email"] ?></a>
-                            <? } else { ?>
-                                <span><? echo $item["for_email"] ?></span>
-                            <? } ?>
-                        </td>
-                        <td style="text-right"><span
-                                    class="label label-<? echo $statuses[$item["status"]]["type"] ?>"><? echo $statuses[$item["status"]]["text"] ?></span>
-                        </td>
-                        <td style="text-right">
-                            <a title="Скрыть?" href="/invite/delete/ID/<? echo $item["ID"] ?>"
-                               class="glyphicon glyphicon-trash js-confirm"></a>
-                            </a>
-                        </td>
-                    </tr>
+
+                        <tr data-index="0">
+                            <td class=""><? echo date("d.m.Y", $item["date"]) ?></td>
+                            <td style="">
+                                <? if ($resInv['users_info'][$item["for_email"]]) {
+                                    $u_inf = $resInv['users_info'][$item["for_email"]];
+                                    ?>
+                                    <a href="/profile/<? echo $u_inf["ID"] ?>"><? echo $u_inf["email"] ?></a>
+                                <? } else { ?>
+                                    <span><? echo $item["for_email"] ?></span>
+                                <? } ?>
+                            </td>
+                            <td style=""><span
+                                        class="label label-<? echo $statuses[$item["status"]]["type"] ?>"><? echo $statuses[$item["status"]]["text"] ?></span>
+                            </td>
+                            <td class="text-center">
+                                <a title="Скрыть?" href="/invite/delete/ID/<? echo $item["ID"] ?>"
+                                   class="ml5 glyphicon glyphicon-trash js-confirm"></a>
+
+                            </td>
+                        </tr>
                     <? } ?>
                     </tbody>
                 </table>
-                <? // var_dump($resInv['users_info'][41]["id"]); //$resInv["users_info" ][41]["id"]?>
+                <? var_dump($item["for_email"]); ?>
                 <? if ($resInv["stack"]) {
                     $paginationUrl = $thisUrl . "?p=";
                     $stack = $resInv["stack"];

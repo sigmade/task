@@ -37,7 +37,7 @@ class Profile
         $me = $_COOKIE["user_id"];
 
         // сбор информации про пользователя
-        $sql = "SELECT * FROM users WHERE id = ".$me;
+        $sql = "SELECT * FROM users WHERE ID = " . $me;
         $resItem = $this->DB->get_row($sql);
 
         // Если есть файл
@@ -67,7 +67,7 @@ class Profile
             "text" => $text,
             "avatar" => $avatarName,
         ];
-        $res = $this->DB->update("users", $arr, "id = ".$me, true);
+        $res = $this->DB->update("users", $arr, "ID = " . $me, true);
 
         //response
         return $arr;
@@ -78,7 +78,7 @@ class Profile
     public function delete($user_id = null)
     {
         $user_id = (!is_numeric($user_id)) ? $_COOKIE["user_id"] : $user_id;
-        $resItem = $this->DB->get_row("SELECT avatar FROM users WHERE id =" . $user_id);
+        $resItem = $this->DB->get_row("SELECT avatar FROM users WHERE ID =" . $user_id);
 
         //delete avatar
 
@@ -92,7 +92,7 @@ class Profile
         }
 
         //delete user
-        $this->DB->delete("users", "id =" . $user_id, true);
+        $this->DB->delete("users", "ID =" . $user_id, true);
         return true;
 
     }

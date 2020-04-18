@@ -19,7 +19,7 @@ class Auth
 
         if(!$resDb){ return false; }
 
-        return $resDb["id"];
+        return $resDb["ID"];
     }
 
     /** Деавторизация  */
@@ -55,7 +55,7 @@ class Auth
         if(!password_verify($pass, $resUser["pass"])){ throw new \Exception("Не верный пароль");}
 
         //авторизуем
-        return $this->setAuth($resUser["id"], $resUser["token"]);
+        return $this->setAuth($resUser["ID"], $resUser["token"]);
 
     }
 
@@ -137,10 +137,10 @@ class Auth
             "confirm_email" => 1
         ];
 
-        $resUpd = $DB->update("users", $arr, "id = ".$resDb["id"]);
+        $resUpd = $DB->update("users", $arr, "ID = " . $resDb["ID"]);
 
         //4
-        return $this->setAuth($resDb["id"], $arr["token"]);
+        return $this->setAuth($resDb["ID"], $arr["token"]);
 
 
 
@@ -156,11 +156,11 @@ class Auth
         $me = $_COOKIE["user_id"];
 
         $DB = new DB();
-        $email= $DB->get_row("SELECT email FROM users WHERE id =".$me)["email"];
+        $email = $DB->get_row("SELECT email FROM users WHERE ID =" . $me)["email"];
         $newPass = password_hash($array["new_pass1"], PASSWORD_DEFAULT);
 
         //обновим пароль
-        $DB->update("users", ["pass" => $newPass], "id = ".$me, true);
+        $DB->update("users", ["pass" => $newPass], "ID = " . $me, true);
 
         // Отправка письма
         $PATH = new Path();
@@ -191,7 +191,7 @@ class Auth
         $token = $this->newToken();
 
         $DB = new DB();
-        $DB->update("users", ["token" => $token], "id= " . $me, true);
+        $DB->update("users", ["token" => $token], "ID= " . $me, true);
 
         return $this->setAuth($me, $token);
 

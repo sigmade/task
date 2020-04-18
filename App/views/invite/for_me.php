@@ -75,7 +75,7 @@
                                     <? if ($u_inf = $resInv['users_info'][$item["from_user_id"]]) {
 
                                         ?>
-                                        <a href="/profile/<? echo $u_inf["id"] ?>"><? echo $u_inf["email"] ?></a>
+                                        <a href="/profile/<? echo $u_inf["ID"] ?>"><? echo $u_inf["email"] ?></a>
                                     <? } else { ?>
                                         <span>-------</span>
                                     <? } ?>
@@ -84,9 +84,14 @@
                                             class="label label-<? echo $statuses[$item["status"]]["type"] ?>"><? echo $statuses[$item["status"]]["text"] ?></span>
                                 </td>
                                 <td style="text-right">
+                                    <a title="Принять?" href="/invite/change_status/status/1/ID/<? echo $item["ID"] ?>"
+                                       class="glyphicon glyphicon-ok-sign"></a>
+                                    <a title="Отклонить?"
+                                       href="/invite/change_status/status/2/ID/<? echo $item["ID"] ?>"
+                                       class="glyphicon glyphicon-remove-sign"></a>
+                                    <span style="margin: 8px;"> | </span>
                                     <a title="Скрыть?" href="/invite/delete/ID/<? echo $item["ID"] ?>"
                                        class="glyphicon glyphicon-trash js-confirm"></a>
-                                    </a>
                                 </td>
                             </tr>
                         <? } ?>

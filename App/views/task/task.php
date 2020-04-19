@@ -14,7 +14,7 @@
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
         <ol class="breadcrumb">
-            <li><a href="#">
+            <li><a href="/">
                     <em class="fa fa-home"></em>
                 </a></li>
             <li class="active">Задачи</li>
@@ -52,7 +52,7 @@
                                     <? $color = ($_GET["sort_by"] == "title") ? "color-orange" : "color-gray"; ?>
                                     <a href="<? echo $thisUrl . "?sort_by=title" ?>"
                                        class="<? echo $color; ?>">Title</a></div>
-                </div>
+
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
@@ -60,7 +60,7 @@
                                     <? $color = ($_GET["sort_by"] == "date_created") ? "color-orange" : "color-gray"; ?>
                                     <a href="<? echo $thisUrl . "?sort_by=date_created" ?>" class="<? echo $color; ?>">Date
                                         of create</a></div>
-            </div>
+
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
@@ -68,7 +68,7 @@
                                     <? $color = ($_GET["sort_by"] == "date_deadline") ? "color-orange" : "color-gray"; ?>
                                     <a href="<? echo $thisUrl . "?sort_by=date_deadline" ?>" class="<? echo $color; ?>">Date
                                         of deadline</a></div>
-        </div>
+
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
@@ -76,7 +76,7 @@
                                     <? $color = ($_GET["sort_by"] == "date_finished") ? "color-orange" : "color-gray"; ?>
                                     <a href="<? echo $thisUrl . "?sort_by=date_finished" ?>" class="<? echo $color; ?>">Date
                                         of finished</a></div>
-    </div>
+
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
@@ -84,7 +84,7 @@
                                     <? $color = ($_GET["sort_by"] == "status") ? "color-orange" : "color-gray"; ?>
                                     <a href="<? echo $thisUrl . "?sort_by=status" ?>"
                                        class="<? echo $color; ?>">Status</a></div>
-</div>
+
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
@@ -136,7 +136,7 @@
                         </tbody>
                         </table>
                 <? if($taskItems["stack"]) {
-                    $paginationUrl = $thisUrl."?p=";
+                    $paginationUrl = ($_GET["sort_by"]) ? $thisUrl . "?sort_by=" . $_GET["sort_by"] . "&p=" : $thisUrl . "&p=";
                     $stack = $taskItems["stack"];
 
                     include "App/views/blocks/pagination.php";

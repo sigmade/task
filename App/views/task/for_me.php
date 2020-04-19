@@ -14,7 +14,7 @@
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
         <ol class="breadcrumb">
-            <li><a href="#">
+            <li><a href="/">
                     <em class="fa fa-home"></em>
                 </a></li>
             <li><a href="/task">Задачи</a></li>
@@ -37,27 +37,50 @@
                         <thead>
                         <tr class="active">
                             <th class="text-right">
-                                <div class="th-inner ">ID</div>
+                                <div class="th-inner ">
+                                    <? $color = (!$_GET["sort_by"] or $_GET["sort_by"] == "ID") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=ID" ?>" class="<? echo $color; ?>">ID</a>
+                                </div>
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
-                                <div class="th-inner ">Title</div>
+                                <div class="th-inner ">
+                                    <? $color = ($_GET["sort_by"] == "title") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=title" ?>"
+                                       class="<? echo $color; ?>">Title</a></div>
+
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
-                                <div class="th-inner ">Date of create</div>
+                                <div class="th-inner ">
+                                    <? $color = ($_GET["sort_by"] == "date_created") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=date_created" ?>" class="<? echo $color; ?>">Date
+                                        of create</a></div>
+
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
-                                <div class="th-inner ">Date of deadline</div>
+                                <div class="th-inner ">
+                                    <? $color = ($_GET["sort_by"] == "date_deadline") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=date_deadline" ?>" class="<? echo $color; ?>">Date
+                                        of deadline</a></div>
+
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
-                                <div class="th-inner ">Date of finished</div>
+                                <div class="th-inner ">
+                                    <? $color = ($_GET["sort_by"] == "date_finished") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=date_finished" ?>" class="<? echo $color; ?>">Date
+                                        of finished</a></div>
+
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
-                                <div class="th-inner ">Status</div>
+                                <div class="th-inner ">
+                                    <? $color = ($_GET["sort_by"] == "status") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=status" ?>"
+                                       class="<? echo $color; ?>">Status</a></div>
+
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
@@ -107,7 +130,7 @@
                         </tbody>
                     </table>
                     <? if ($taskItems["stack"]) {
-                        $paginationUrl = $thisUrl . "?p=";
+                        $paginationUrl = ($_GET["sort_by"]) ? $thisUrl . "?sort_by=" . $_GET["sort_by"] . "&p=" : $thisUrl . "&p=";
                         $stack = $taskItems["stack"];
 
                         include "App/views/blocks/pagination.php";

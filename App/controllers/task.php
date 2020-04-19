@@ -94,7 +94,7 @@ if($_GET["method"])
             break;
         case "for_me":
 
-            $taskItems = $Task->get(["m" => 3, "limit" => 20, "p" => $_GET["p"]]);
+            $taskItems = $Task->get(["m" => 3, "limit" => 20, "p" => $_GET["p"], "sort_by" => @$_GET["sort_by"]]);
             $thisUrl = $Path->withoutGet();
             $pageTitle = "Задачи для меня";
             include "App/views/task/for_me.php";

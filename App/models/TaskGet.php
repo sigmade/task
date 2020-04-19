@@ -63,7 +63,7 @@ class TaskGet
         $resNav = Counter::get_nav($arr);
 
         //Делаем быборку записей
-        $sql = "SELECT * FROM task WHERE from_user_id = " . $me . " ORDER BY " . $sort_by . " LIMIT " . $resNav["start"] . "," . $resNav["limit"];
+        $sql = "SELECT * FROM task WHERE from_user_id = " . $me . " ORDER BY " . $sort_by . " DESC LIMIT " . $resNav["start"] . "," . $resNav["limit"];
         $resItems = $this->DB->get_rows($sql, true);
 
         //response
@@ -110,6 +110,9 @@ class TaskGet
         $page = (!is_numeric($array["p"])) ? 0 : $array["p"];
         $me = $_COOKIE["user_id"];
 
+        $sortes = ["ID", "date_created", "date_deadline", "date_finished", "status", "title"];
+        $sort_by = (!in_array($array["sort_by"], $sortes)) ? "ID" : $array["sort_by"];
+
         //проверки
 
         // сколько всего записей
@@ -131,7 +134,7 @@ class TaskGet
         $resNav = Counter::get_nav($arr);
 
         //Делаем быборку записей
-        $sql = "SELECT * FROM task WHERE deleted = 0 AND for_user_id = " . $me . " LIMIT " . $resNav["start"] . "," . $resNav["limit"];
+        $sql = "SELECT * FROM task WHERE deleted = 0 AND for_user_id = " . $me . " ORDER BY " . $sort_by . " DESC LIMIT " . $resNav["start"] . "," . $resNav["limit"];
         $resItems = $this->DB->get_rows($sql, true);
 
         //response

@@ -119,7 +119,7 @@ if($_GET["method"])
 }
 else
 {
-    $taskItems = $Task->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
+    $taskItems = $Task->get(["m" => 1, "limit" => 20, "p" => @$_GET["p"], "sort_by" => @$_GET["sort_by"]]);
     $thisUrl = $Path->withoutGet();
     $pageTitle = "Задачи";
     include "App/views/task/task.php";

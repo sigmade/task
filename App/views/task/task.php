@@ -41,27 +41,50 @@
                         <thead>
                             <tr class="active">
                             <th class="text-right">
-                                <div class="th-inner ">ID</div>
+                                <div class="th-inner ">
+                                    <? $color = (!$_GET["sort_by"] or $_GET["sort_by"] == "ID") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=ID" ?>" class="<? echo $color; ?>">ID</a>
+                                </div>
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
-                                <div class="th-inner ">Title</div>
+                                <div class="th-inner ">
+                                    <? $color = ($_GET["sort_by"] == "title") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=title" ?>"
+                                       class="<? echo $color; ?>">Title</a></div>
+                </div>
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
-                                <div class="th-inner ">Date of create</div>
+                                <div class="th-inner ">
+                                    <? $color = ($_GET["sort_by"] == "date_created") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=date_created" ?>" class="<? echo $color; ?>">Date
+                                        of create</a></div>
+            </div>
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
-                                <div class="th-inner ">Date of deadline</div>
+                                <div class="th-inner ">
+                                    <? $color = ($_GET["sort_by"] == "date_deadline") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=date_deadline" ?>" class="<? echo $color; ?>">Date
+                                        of deadline</a></div>
+        </div>
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
-                                <div class="th-inner ">Date of finished</div>
+                                <div class="th-inner ">
+                                    <? $color = ($_GET["sort_by"] == "date_finished") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=date_finished" ?>" class="<? echo $color; ?>">Date
+                                        of finished</a></div>
+    </div>
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">
-                                <div class="th-inner ">Status</div>
+                                <div class="th-inner ">
+                                    <? $color = ($_GET["sort_by"] == "status") ? "color-orange" : "color-gray"; ?>
+                                    <a href="<? echo $thisUrl . "?sort_by=status" ?>"
+                                       class="<? echo $color; ?>">Status</a></div>
+</div>
                                 <div class="fht-cell"></div>
                             </th>
                             <th class="">

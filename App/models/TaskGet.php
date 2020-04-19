@@ -113,11 +113,19 @@ class TaskGet
         $sortes = ["ID", "date_created", "date_deadline", "date_finished", "status", "title"];
         $sort_by = (!in_array($array["sort_by"], $sortes)) ? "ID" : $array["sort_by"];
 
+        $status = (isset($array["status"]) and is_numeric($array["status"])) ? $array["status"] : null;
+        if ($status > 2) {
+            $status = 2;
+        }
+        if (!is_null($status)) {
+            $status = " AND status = " . $status;
+        }
+
         //проверки
 
         // сколько всего записей
 
-        $sql = "SELECT COUNT(*) AS n FROM task WHERE deleted = 0 AND for_user_id = " . $me;
+        $sql = "SELECT COUNT(*) AS n FROM task WHERE deleted = 0 AND for_user_id = " . $me . $status;
         $resCount = $this->DB->get_row($sql)["n"];
         if (!$resCount) {
             return false;
@@ -134,7 +142,7 @@ class TaskGet
         $resNav = Counter::get_nav($arr);
 
         //Делаем быборку записей
-        $sql = "SELECT * FROM task WHERE deleted = 0 AND for_user_id = " . $me . " ORDER BY " . $sort_by . " DESC LIMIT " . $resNav["start"] . "," . $resNav["limit"];
+        $sql = "SELECT * FROM task WHERE deleted = 0 AND for_user_id = " . $me . $status . " ORDER BY " . $sort_by . " DESC LIMIT " . $resNav["start"] . "," . $resNav["limit"];
         $resItems = $this->DB->get_rows($sql, true);
 
         //response

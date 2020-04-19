@@ -7,6 +7,11 @@ if(!$Auth->check_auth())
 }
 else
 {
-    $pageTitle = "Главная";
+    $Task = new \App\models\Task();
+    $Profile = new \App\models\Profile();
+
+    $myTeam = $Profile->get(["m" => 4]);
+    $resTasks = $Task->get(["m" => 3, "limit" => 20, "status" => 0]);
+    $pageTitle = "Dashboard";
     include "App/views/main.php";
 }

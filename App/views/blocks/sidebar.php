@@ -25,7 +25,7 @@
             $in = null;
         }
         ?>
-        <li class="parent <? echo $parent_active; ?>"><a href="index.html"><em class="fa fa-dashboard">&nbsp;</em>
+        <li class="parent <? echo $parent_active; ?>"><a href="/main"><em class="fa fa-dashboard">&nbsp;</em>
                 Dashboard</a></li>
         <?
         if ($sideBar_page["lvl1"] == "task") {

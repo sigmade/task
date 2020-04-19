@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><? echo $pageTitle; ?></title>
     <? require_once "App/views/blocks/csslumino.php" ?>
+    <link rel="stylesheet" href="/resources/css/helpers.css">
 </head>
 <body>
 <? require_once "App/views/blocks/header.php" ?>

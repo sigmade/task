@@ -54,7 +54,7 @@ if ($_GET["method"]) {
                 include "App/views/for_error.php";
             }
         case "for_me":
-
+            $sideBar_page = ["lvl1" => "invite", "lvl2" => "for_me"];
             $resInv = $Invite->get(["m" => 2, "limit" => 20, "p" => $_GET["p"]]);
             $thisUrl = $Path->withoutGet();
             $pageTitle = "Приглашения для меня";
@@ -65,6 +65,8 @@ if ($_GET["method"]) {
 
     endswitch;
 } else {
+
+    $sideBar_page = ["lvl1" => "invite", "lvl2" => "my"];
     $resInv = $Invite->get(["m" => 1, "limit" => 20, "p" => $_GET["p"]]);
     $thisUrl = $Path->withoutGet();
 

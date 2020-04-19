@@ -26,6 +26,9 @@ class TaskGet
             case 3:
                 $res = $this->method_3($array);
                 break; //Вывод всех записей для меня
+            case 4:
+                $res = $this->method_4($array);
+                break; //Подсчет задач для меня в разных статусах
         endswitch;
 
         return $res;
@@ -149,6 +152,21 @@ class TaskGet
         $res = ["items" => $resItems, "stack" => $resNav["stack"]];
         // $res = ["items" => 1, "stack" => 1];
         return $res;
+
+    }
+
+    private function method_4($array = null)
+    {
+        $me = $_COOKIE["user_id"];
+        for ($i = 0; $i < 3; $i++):
+
+            $sql[] = "(SELECT COUNT(*) FROM task WHERE deleted = 0 AND for_user_id = " . $me . " AND status = " . $i . ") AS status_" . $i;
+        endfor;
+
+        $sql = "SELECT " . implode(",", $sql);
+        $resCount = $this->DB->get_row($sql);
+
+        return $resCount;
 
     }
 }

@@ -89,7 +89,7 @@
         </div>
         <div class="col-md-3">
             <div class="panel panel-default">
-                <div class="panel-heading"> Site Traffic Overview</div>
+                <div class="panel-heading">Статистика задач</div>
                 <div class="panel-body">
                     <div class="canvas-wrapper">
                         <canvas class="chart" id="doughnut-chart"></canvas>
@@ -105,11 +105,12 @@
 <script src="resources/lumino/js/jquery-1.11.1.min.js"></script>
 <script src="resources/lumino/js/bootstrap.min.js"></script>
 <script src="resources/lumino/js/chart.min.js"></script>
-<script src="resources/lumino/js/chart-data.js"></script>
+    <!--<script src="resources/lumino/js/chart-data.js"></script>-->
 <script src="resources/lumino/js/easypiechart.js"></script>
-<script src="resources/lumino/js/easypiechart-data.js"></script>
+    <!--<script src="resources/lumino/js/easypiechart-data.js"></script>-->
 <script src="resources/lumino/js/bootstrap-datepicker.js"></script>
 <script src="resources/lumino/js/custom.js"></script>
+    <script src="/resources/js/dashboard.js"></script>
 <script>
     window.onload = function () {
         var chart1 = document.getElementById("line-chart").getContext("2d");

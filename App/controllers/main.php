@@ -3,7 +3,8 @@
 
 if(!$Auth->check_auth())
 {
-    include "App/views/template.php";
+    $pageTitle = "Welcome";
+    include "App/views/welcome.php";
 }
 else
 {

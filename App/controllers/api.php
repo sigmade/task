@@ -1,6 +1,23 @@
 <?php
+/*
+ Авторизация через соцсети
+ */
+if ($_GET["method"] == "social" and $_POST["token"]) {
+    try {
+        $AuthSocial = new \App\models\AuthSocial();
+        $AuthSocial->enter($_POST);
+        header("Location: /");
 
-//* Task */
+    } catch (Exception $e) {
+        $error = ["error_text" => $e->getMessage()];
+        include "App/views/for_error.php";
+    }
+}
+
+
+/*
+ Task
+ */
 if ($_POST["method_name"] == "getTaskCount_forMe") {
 
     $Task = new \App\models\Task();

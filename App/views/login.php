@@ -11,8 +11,9 @@
         <input type="hidden" name="method_name" value="enter">
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Войти</h1>
         <div class="social-login">
-            <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span> </button>
-            <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span> </button>
+            <span class="text-center">
+            <div id="uLogin_8542e3e5" data-uloginid="8542e3e5"></div>
+            </span>
         </div>
         <p style="text-align:center"> Или  </p>
         <input type="email" name="email" value="<? echo $inputs_val["email"]; ?>" id="inputEmail" class="form-control" placeholder="Email адрес" required="" autofocus="">
@@ -78,5 +79,7 @@ $(()=>{
 </p>
 <? require_once "App/views/blocks/scripts.php"?>
 <script src="/resources/js/login.js"></script>
+<script src="//ulogin.ru/js/ulogin.js"></script>
+<div id="uLogin_8542e3e5" data-uloginid="8542e3e5"></div>
 </body>
 </html>
